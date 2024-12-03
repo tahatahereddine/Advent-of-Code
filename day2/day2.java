@@ -61,11 +61,10 @@ public class day2 {
         int prev = report.get(0);
 
         for(int i=1; i<report.size(); i++){
-            // check constant progress direction
             int diff = report.get(i) - prev;
             
             if(progressDirection != null){
-                // check if the direction changed
+                // check if the progress direction changed (All increasing or All decreasing)
                 if(progressDirection != (diff > 0 ? 1 : -1) ){
                     oneWayProgress = false;
                     break;
@@ -74,7 +73,7 @@ public class day2 {
             if(progressDirection == null){
                 progressDirection = diff > 0 ? 1 : -1;
             }
-            
+
             // check rate of change
             diff = Math.abs(diff);
             safeRate = diff >= 1 && diff <= 3;
