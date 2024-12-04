@@ -25,7 +25,7 @@ public class day4 {
             for(int j=0; j<=m; j++){
                 boolean rightCheck = m-j >= 3;
                 boolean leftCheck = j >= 3;
-                // System.out.print("i:"+i+",j:"+j+"\tm="+m+",n:"+n+"\n");
+                // System.out.println("i:"+i+",j:"+j);
                 if(word.charAt(j) == 'X'){ // Only check when the word starts with 'X'
                     char X = word.charAt(j);
 
@@ -83,51 +83,59 @@ public class day4 {
         
         System.out.println("XMAS occurences: " + xmasOccurence);
 
-        // Part 2 (IN THE WORKS...)
+        // Part 2
         int xMasOccurence = 0;
 
         for(int i=0; i<=n; i++){
-            boolean upCheck = i >= 2;
-            boolean downCheck = n-i >= 2;
+            boolean upCheck = i >= 1;
+            boolean downCheck = n-i >= 1;
             String word = words.get(i);
             for(int j=0; j<=m; j++){
-                boolean rightCheck = m-j >= 2;
-                boolean leftCheck = j >= 2;
-                if(word.charAt(j) == 'M'){ // Only check when the word starts with 'M'
-                    char M = word.charAt(j);
+                // System.out.println("i:"+i+",j:"+j);
+                boolean rightCheck = m-j >= 1;
+                boolean leftCheck = j >= 1;
+                if(word.charAt(j) == 'A'){ // Only check for 'A' the center of the desired pattern
 
-                    // Check diagonal X-MAS
-                    if(rightCheck && downCheck){
-                        if(word.charAt(j+2) == 'M'){ // M . M
-                                                     // . A .
-                                                     // S . S
-                            String MAS1 = "" + M + words.get(i+1).charAt(j+1) + words.get(i+2).charAt(j+2);
-                            String MAS2 = "" + M + words.get(i+1).charAt(j+1) + words.get(i+2).charAt(j);
-                            if(MAS1.equals(MAS2))
-                                xMasOccurence++;
-
-                        }else if(words.get(i+2).charAt(j) == 'M'){ // M . S
-                                                                   // . A .
-                                                                   // M . S
-                            String MAS1 = "" + M + words.get(i+1).charAt(j+1) + words.get(i+2).charAt(j+2);
-                            String MAS2 = "" + M + words.get(i-1).charAt(j+1) + words.get(i).charAt(j);
-                            if(MAS1.equals(MAS2))
-                                xMasOccurence++;
-                        }             
+                    if(upCheck && rightCheck && downCheck && leftCheck){
+                        if(words.get(i-1).charAt(j-1) == 'M' && words.get(i-1).charAt(j+1) == 'M'
+                        && words.get(i+1).charAt(j-1) == 'S' && words.get(i+1).charAt(j+1) == 'S'){ 
+                            // M . M
+                            // . A .
+                            // S . S
+                            xMasOccurence++;
+                        }else if(words.get(i-1).charAt(j-1) == 'M' && words.get(i-1).charAt(j+1) == 'S'
+                              && words.get(i+1).charAt(j-1) == 'M' && words.get(i+1).charAt(j+1) == 'S'){
+                            // M . S
+                            // . A .
+                            // M . S
+                            xMasOccurence++;
+                        }else if(words.get(i-1).charAt(j-1) == 'S' && words.get(i-1).charAt(j+1) == 'M'
+                              && words.get(i+1).charAt(j-1) == 'S' && words.get(i+1).charAt(j+1) == 'M'){
+                            // S . M
+                            // . A .
+                            // S . M
+                            xMasOccurence++;
+                        }else if(words.get(i-1).charAt(j-1) == 'S' && words.get(i-1).charAt(j+1) == 'S'
+                              && words.get(i+1).charAt(j-1) == 'M' && words.get(i+1).charAt(j+1) == 'M'){
+                            // S . S
+                            // . A .
+                            // M . M
+                            xMasOccurence++;
+                        }            
                     
                     }
                 }
             }
         }
         System.out.println("X-MAS occurences: " + xMasOccurence);
-
     }
+
 
     public static void loadInput(List<String> words){
         File input = null;
         Scanner scanner = null;
         try{
-            input = new File("test.txt");
+            input = new File("input.txt");
             scanner = new Scanner(input);
         } catch (FileNotFoundException e){
             System.err.println(e);
